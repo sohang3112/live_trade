@@ -2,13 +2,12 @@
 Buying, Selling and Viewing Live Trade Data using Zerodha Kite
 
 ## Requirements
-- Python 3, with the following Python packages installed using pip:
-    - datetime 
+- Python 3
+- Pip Install:
     - kiteconnect
-    - pyperclip 
     - pyotp  
     - selenium
-    - tg-logger
+    - webdriver-manager
 
 ## Configuration
 Create a file `config.ini` and fill your Zerodha account details in it
