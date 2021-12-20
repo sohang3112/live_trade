@@ -4,7 +4,7 @@ from pyotp import TOTP
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.expected_conditions import presence_of_element_located
 from webdriver_manager.chrome import ChromeDriverManager
 from urllib.parse import parse_qs, urlparse
 
@@ -14,13 +14,19 @@ def get_request_token(kite_url: str, user_id: str, password: str, totp: str) -> 
     with Chrome(chrome_path) as driver:
         wait = WebDriverWait(driver, 10)
         driver.get(kite_url)
+        
+        # login with user_id and password
         wait.until(EC.presence_of_element_located((By.ID, 'userid'))).send_keys(user_id)
         driver.find_element(By.ID, 'password').send_keys(password)
         driver.find_element(By.CSS_SELECTOR, '.login-form button[type="submit"]').click()
-        wait.until(EC.presence_of_element_located((By.ID, 'totp'))).send_keys(totp)
+        
+        # enter totp and get final, redirected url
+        wait.until(presence_of_element_located((By.ID, 'totp'))).send_keys(totp)
         driver.find_element(By.CSS_SELECTOR, '.login-form button[type="submit"]').click()
         wait.until(lambda driver: 'request_token' in driver.current_url)
         token_url = driver.current_url
+        
+    # parse request token from redirected url
     return parse_qs(urlparse(token_url).query)['request_token'][0]
 
 config = ConfigParser()
