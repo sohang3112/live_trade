@@ -16,7 +16,7 @@ def get_request_token(kite_url: str, user_id: str, password: str, totp: str) -> 
         driver.get(kite_url)
         
         # login with user_id and password
-        wait.until(EC.presence_of_element_located((By.ID, 'userid'))).send_keys(user_id)
+        wait.until(presence_of_element_located((By.ID, 'userid'))).send_keys(user_id)
         driver.find_element(By.ID, 'password').send_keys(password)
         driver.find_element(By.CSS_SELECTOR, '.login-form button[type="submit"]').click()
         
