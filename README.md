@@ -3,6 +3,7 @@ Buying, Selling and Viewing Live Trade Data using Zerodha Kite
 
 ## Requirements
 - Python 3
+- Chrome Browser must be installed (preferably latest version).
 - Pip Install:
     - kiteconnect
     - pyotp  
